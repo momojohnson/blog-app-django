@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 mt-5 mx-auto">
+            <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><strong><a href="{% url 'home' %}">Boards</a></strong></li>
+                    <li class="breadcrumb-item active"><a href="{% url 'boards:board_topics' board.id %}">{{board.name}}</a> </li>
+                  </ol>
+    </nav>
+  <div class="mb-4">
+    <a href="{% url 'boards:new_topic' board.pk %}" class="btn btn-primary">New topic</a>
+  </div>
+    <table class="table table-striped mb-4">
+    <thead class="thead-inverse">
+      <tr>
+        <th>Topic</th>
+        <th>Starter</th>
+        <th>Replies</th>
+        <th>Views</th>
+        <th>Last Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for topic in topics %}
+        {% url 'boards:topic_posts' board.pk topic.pk as topic_url %}
+        <tr>
+          <td>
+            <p class="mb-0">
+              <a href="{{ topic_url }}">{{ topic.subject }}</a>
+            </p>
+            <small class="text-muted">
+              Pages:
+              {% for i in topic.get_page_range %}
+                <a href="{{ topic_url }}?page={{ i }}">{{ i }}</a>
+              {% endfor %}
+              {% if topic.has_many_pages %}
+              ... <a href="{{ topic_url }}?page={{ topic.get_page_count }}">Last Page</a>
+              {% endif %}
+            </small>
+          </td>
+          <td class="align-middle">{{ topic.starter.username }}</td>
+          <td class="align-middle">{{ topic.replies }}</td>
+          <td class="align-middle">{{ topic.views }}</td>
+          <td class="align-middle">{{ topic.last_updated|naturaltime }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% include 'includes/pagination.html' %}
+        </div>
+      </div>
+    </div>
+{% endblock %}

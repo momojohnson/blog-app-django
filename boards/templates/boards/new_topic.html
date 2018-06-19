@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 mt-5 mx-auto">
+            <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><strong><a href="{% url 'home' %}">Boards</a></strong></li>
+                    <li class="breadcrumb-item"><a href="{%url 'boards:board_topics' board_id=board.id %}"></a> {{board.name}}</li>
+                    <li class="breadcrumb-item active">New topic</li>
+                  </ol>
+            </nav>
+          <form action="{% url 'boards:new_topic' board_pk=board.id %}" method="post" novalidate>
+                {% csrf_token %}
+                  {% include 'includes/form.html' with form=topic_form%}
+                <button type="submit" class="btn btn-success">Post</button>
+          </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+  <script>    
+  var simplemde = new SimpleMDE();
+  </script>
+{% endblock %}

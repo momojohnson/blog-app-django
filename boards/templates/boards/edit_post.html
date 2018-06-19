@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto mt-2">
+             <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'home' %}">Boards</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'boards:board_topics' post.topic.board.pk %}">{{ post.topic.board.name }}</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'boards:topic_posts' post.topic.board.pk post.topic.pk %}">{{ post.topic.subject }}</a></li>
+              <li class="breadcrumb-item active">Edit post</li>
+              </ol>
+            </nav>
+              <form method="post" class="mb-4" novalidate>
+                {% csrf_token %}
+                {% include 'includes/form.html' with form=form %}
+                <button type="submit" class="btn btn-success">Save changes</button>
+                <a href="{% url 'boards:topic_posts' post.topic.board.pk post.topic.pk %}" class="btn btn-outline-secondary" role="button">Cancel</a>
+          </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block javascript %}
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+  <script>    
+  var simplemde = new SimpleMDE();
+  </script>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block content %}
+      <div class="container">
+          <div class="row">
+              <div class="col-md-8 mx-auto mt-4">
+    <table class="table">
+      
+      <thead class='thead-dark'>
+        <tr>
+          <th scope="col">Board</th>
+          <th scope="col">Posts</th>
+          <th scope="col">Topics</th>
+          <th scope="col">Lastest Post</th>
+        </tr>
+      </thead>
+  <tbody>
+      {% for board in boards %}
+    <tr>
+      <td><a href="{% url 'boards:board_topics' board_id=board.id %}">{{board.name}}</a><br><small class="lead">{{board.description}}</small></td>
+      <td>{{board.get_total_number_post}}</td>
+      <td>{{board.topics.count}}</td>
+      <td>
+           {% with post=board.get_lastest_post %}
+           {% if post %}
+              <small>
+                <a href="{% url 'boards:topic_posts' board.pk post.topic.pk %}">
+                  By {{ post.created_by.username }} at {{ post.created_at|naturaltime }}
+                </a>
+              </small>
+                {% else %}
+              <small>
+                <em>No post yet</em>
+              
+              </small>
+              {% endif %}
+            {% endwith %}
+          
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+    </div>
+</div>
+</div>
+
+{% endblock %}

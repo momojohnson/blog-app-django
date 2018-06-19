@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+ <link rel="stylesheet" href="{% static 'css/account.css' %}" type="text/css" />
+{% endblock %}
+{% block title %}Django Board|Register{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-7 mx-auto mt-1">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title text-center">Register</h5>
+        <form action = "{% url 'accounts:register' %}" method="POST" novalidate>
+            {% csrf_token %}
+            {% include 'includes/form.html' with form=register_form %}
+            <div class="text-center">
+                <button type="submit" class="btn btn-success w-75 ">Register</button>
+            </div>
+        </form>
+        </div>
+         <div class="card-footer text-muted text-center">
+            Already have an account? <a href="#">Log in</a>
+          </div>
+        </div>
+        </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
