@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% load humanize %}
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-9 mt-5 mx-auto">
-            <nav aria-label="breadcrumb">
-                  <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><strong><a href="{% url 'home' %}">Boards</a></strong></li>
-                    <li class="breadcrumb-item active"><a href="{% url 'boards:board_topics' board.id %}">{{board.name}}</a> </li>
-                  </ol>
+  <div class="container">
+      <div class="row">
+      <div class="col-md-9 mt-5 mx-auto">
+      <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><strong><a href="{% url 'home' %}">Boards</a></strong></li>
+            <li class="breadcrumb-item active"><a href="{% url 'boards:board_topics' board.id %}">{{board.name}}</a> </li>
+          </ol>
     </nav>
   <div class="mb-4">
     <a href="{% url 'boards:new_topic' board.pk %}" class="btn btn-primary">New topic</a>
